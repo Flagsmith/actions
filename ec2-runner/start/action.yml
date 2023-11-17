@@ -53,5 +53,5 @@ runs:
             "cd /home/ubuntu/actions-runner",
             "export RUNNER_ALLOW_RUNASROOT=1",
             "./config.sh --url {repoUrl} --token {token} --labels {label} --name {name} --unattended --ephemeral",
-            "sudo ./run.sh"
+            "./run.sh"
           ]
