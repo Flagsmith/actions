@@ -47,16 +47,11 @@ runs:
         launch-template: true
         launch-template-id: ${{ inputs.launch-template-id }}
         region: ${{ inputs.aws-region }}
-        startup-commands:
-          - "#!/bin/bash"
-          - cd /home/ubuntu/actions-runner
-          - export RUNNER_ALLOW_RUNASROOT=1
-          - >
-            ./config.sh
-              --url {repoUrl}
-              --token {token}
-              --labels {label}
-              --name {name}
-              --unattended
-              --ephemeral
-          - sudo ./run.sh
+        startup-commands: >
+          [
+            "#!/bin/bash",
+            "cd /home/ubuntu/actions-runner",
+            "export RUNNER_ALLOW_RUNASROOT=1",
+            "./config.sh --url {repoUrl} --token {token} --labels {label} --name {name} --unattended --ephemeral",
+            "sudo ./run.sh"
+          ]
