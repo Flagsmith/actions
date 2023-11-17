@@ -1,0 +1,49 @@
+name: Start EC2 runner
+description: Start a GHA runner on EC2
+
+inputs:
+  github-access-token:
+    description: The Github access token to use to access Flagsmith's repositories
+    required: true
+  aws-access-key-id:
+    description: The AWS access key ID to use for running the EC2 image.
+    required: false
+    default: AKIAUM26IRCPLE3QZCAS
+  aws-secret-access-key:
+    description: The AWS secret access key to use for running the EC2 image.
+    required: true
+  aws-region:
+    description: The AWS region.
+    required: false
+    default: eu-west-2
+  launch-template-id:
+    description: The launch template ID to use.
+    required: false
+    default: lt-018878370e0fcfa21
+outputs:
+  runner-label:
+    description: EC2 runner label
+    value: ${{ steps.start-ec2-runner.outputs.runner-label }}
+  instance-id:
+    description: EC2 instance ID
+    value: ${{ steps.start-ec2-runner.outputs.instance-id }}
+
+runs:
+  using: composite
+  steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ inputs.aws-access-key-id }}
+        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
+        aws-region: ${{ inputs.aws-region }}
+
+    - name: Run EC2 Start
+      id: start-ec2-runner
+      uses: Flagsmith/github-runner-ec2-start@v1
+      with:
+        github-token: ${{ inputs.github-access-token }}
+        runner-directory: /home/ubuntu/actions-runner
+        launch-template: true
+        launch-template-id: ${{ inputs.launch-template-id }}
+        region: ${{ inputs.aws-region }}
