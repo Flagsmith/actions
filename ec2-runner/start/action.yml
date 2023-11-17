@@ -40,7 +40,7 @@ runs:
 
     - name: Run EC2 Start
       id: start-ec2-runner
-      uses: Flagsmith/github-runner-ec2-start@v1
+      uses: rogisolorzano/github-runner-ec2-start@v1.2
       with:
         github-token: ${{ inputs.github-access-token }}
         runner-directory: /home/ubuntu/actions-runner
