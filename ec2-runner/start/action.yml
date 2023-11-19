@@ -51,6 +51,7 @@ runs:
           [
             "#!/bin/bash",
             "cd /home/ubuntu/actions-runner",
+            "export HOME=/home/ubuntu",
             "export RUNNER_ALLOW_RUNASROOT=1",
             "export npm_config_user=0",
             "./config.sh --url {repoUrl} --token {token} --labels {label} --name {name} --unattended --ephemeral",
