@@ -8,7 +8,7 @@ inputs:
   aws-access-key-id:
     description: The AWS access key ID to use for running the EC2 image.
     required: false
-    default: AKIAUM26IRCPLE3QZCAS
+    default: AKIAUM26IRCPDN36DNG6
   aws-secret-access-key:
     description: The AWS secret access key to use for running the EC2 image.
     required: true
