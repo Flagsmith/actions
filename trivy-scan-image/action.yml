@@ -27,6 +27,10 @@ inputs:
   trivy-java-db-repository:
     description: TRIVY_JAVA_DB_REPOSITORY value.
     required: false
+  artifact-name:
+    description: Name of the artifact to upload.
+    required: false
+    default: trivy-results
 
 outputs:
   scan-results-url:
@@ -35,6 +39,9 @@ outputs:
   scan-outcome:
     description: Scan outcome
     value: ${{ steps.trivy.outcome }}
+  artifact-url:
+    description: URL to the uploaded artifact
+    value: ${{ steps.upload-artifact.outputs.artifact-url }}
 
 runs:
   using: composite
@@ -67,6 +74,14 @@ runs:
       with:
         category: ${{ inputs.category }}
         sarif_file: trivy-results.sarif
+
+    - name: Upload Trivy scan results as an artifact
+      id: upload-artifact
+      if: success() || failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: trivy-results.sarif
 
     - name: Render scan results URL
       if: success() || failure()
