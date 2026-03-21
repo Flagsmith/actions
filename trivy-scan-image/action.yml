@@ -57,7 +57,9 @@ runs:
 
     - name: Run Trivy on ${{ inputs.image-tag }}
       id: trivy
-      uses: aquasecurity/trivy-action@master
+      # KEEP THIS PINNED AT A SAFE VERSION
+      # https://thehackernews.com/2026/03/trivy-security-scanner-github-actions.html
+      uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1
       with:
         image-ref: ${{ inputs.image-tag }}
         format: sarif
